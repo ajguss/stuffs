@@ -1,0 +1,44 @@
+
+
+
+
+
+* {
+	cursor: crosshair;
+}
+img {
+	height: 60px;
+	width: auto;
+}
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	margin-top: 100px;
+	overflow: hidden;
+}
+li {
+	float: left;
+	background: blue;
+}
+a {
+	display: block;
+	width: 360px;
+	text-decoration: none;
+}
+a:link, a:visited {
+	color: white;
+	background-color: #990000;
+	font-size: 40px;
+	font-style: oblique;
+	font-family: "Times New Roman", times, serif;
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase
+}
+
+a:hover, a:active {
+	background-color: #4d0000;
+	text-align: center;
+}
+
