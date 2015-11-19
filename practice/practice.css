@@ -1,32 +1,44 @@
 
 
 * {
-	cursor: crosshair;
+	cursor: default;;
 }
-img {
-	height: 60px;
+#logo {
+	height: 40px;
 	width: auto;
+	margin-bottom: 0px;
 }
 ul {
+	margin-left: 300px;
 	list-style-type: none;
-	margin: 0;
 	padding: 0;
-	margin-top: 100px;
-	overflow: hidden;
+	margin-top: 10px;
+	overflow: visible;
+	position: relative;
 }
 li {
 	float: left;
-	background: blue;
+	background: white;
 }
 a {
+	padding: 15px 30px 15px 30px;
 	display: block;
-	width: 360px;
+	width: 200px;
 	text-decoration: none;
+}
+#sign_in {
+	padding-left: 10px;
+	display: block;
+	width: auto;
+	background: #ffffff;
+}
+#sign_in:hover {
+	cursor: pointer;
 }
 a:link, a:visited {
 	color: white;
 	background-color: #990000;
-	font-size: 40px;
+	font-size: 24px;
 	font-style: oblique;
 	font-family: "Times New Roman", times, serif;
 	font-weight: bold;
@@ -35,6 +47,7 @@ a:link, a:visited {
 }
 
 a:hover, a:active {
+	cursor: pointer;
 	background-color: #4d0000;
 	text-align: center;
 }
