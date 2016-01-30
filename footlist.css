@@ -1,0 +1,30 @@
+ul.footlist {
+	list-style-type: none;
+	padding: 10px;
+	margin-bottom: -2px;
+	margin-left: -8px;
+	overflow: hidden;
+	background-color: #333;
+	bottom: 0;
+	position: fixed;
+	width: 100%;
+}
+
+ul.footlist li {
+	float: left;
+}
+
+ul.footlist li a {
+	text-decoration: none;
+	font-size: 18px;
+	font-family: "Rockwell";
+	color: #f2f2f2;
+	text-align: center;
+	padding: 12px;
+}
+
+ul.footlist li.disclaimer{
+	color: #f2f2f2;
+	float: right;
+	padding-right: 24px;
+}
