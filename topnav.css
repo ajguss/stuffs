@@ -1,8 +1,8 @@
 /* Remove margins and padding from the list, and add a black background color */
 ul.topnav {
     list-style-type: none;
-    margin: 0;
     padding: 0;
+	margin: -8px;
     overflow: hidden;
     background-color: #333;
 }
