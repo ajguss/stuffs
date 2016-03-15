@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Skin Gambling' });
+router.get('/', function(req, res, next) 
+{
+	res.render('index', { title: 'Skin Gambling', whoToFuck: "DAVID"  });
 });
 
 module.exports = router;
