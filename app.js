@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 GLOBAL.passport = require('passport');
 var session = require('express-session');
 var SteamStrategy = require('passport-steam').Strategy;
+var ejs = require('ejs');
+
+ejs.delimiter = '?';
 
 var routes = require('./routes/index');
 var login = require('./routes/login');
