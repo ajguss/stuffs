@@ -11,54 +11,36 @@ var SteamStrategy = require('passport-steam').Strategy;
 var routes = require('./routes/index');
 var login = require('./routes/login');
 
+GLOBAL.localIp = '192.168.0.108';
+
+GLOBAL.user = {};
+
 passport.serializeUser(function(user, done) 
 {
-	console.log("");
-	console.log("");
-	console.log("");
-	console.log("Got Here 2");
-	console.log("");
-	console.log("");
-	console.log("");
+    GLOBAL.user = user;
+    console.log(user);
+    
 	done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) 
 {
-	console.log("");
-	console.log("");
-	console.log("");
-	console.log("Got Here 1");
-	console.log("");
-	console.log("");
-	console.log("");
 	done(null, obj);
 });
 
 passport.use(new SteamStrategy(
 {
-	returnURL: 'http://localhost:3000/steam/auth/return',
-	realm: 'http://localhost:3000/',
-	apiKey: '2C82A7732A81FC33E923363825B47586',
-	profile: true
+    returnURL: 'http://' + GLOBAL.localIp + ':3000/auth/steam/return',
+    realm: 'http://' + GLOBAL.localIp + ':3000/',
+    apiKey: '2C82A7732A81FC33E923363825B47586'
 },
 function(identifier, profile, done)
 {
-	console.log("");
-	console.log("");
-	console.log("");
-	console.log("Got Here");
-	console.log("");
-	console.log("");
-	console.log("");
-	process.nextTick(function () 
-	{
-		profile.identifier = identifier;
-		console.log("--- Profile ---");
-		console.log(profile);
-		console.log("--- Profile ---");
-		return done(null, profile);
-	});
+    console.log("I GOT HERE!!!!!!!!!");
+    console.log(identifier);
+    console.log(profile);
+    
+    return done(null, profile);
 }
 ));
 
@@ -69,7 +51,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -83,25 +65,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/login', login);
 
-app.use('/steam/auth/return',
-function(req, res, next)
-{
-	/*console.log(" --- Query --- ");
-	console.log(req.query);
-	console.log(" --- Query--- ");
-	console.log("");
-	console.log(" --- Passport --- ");
-	console.log(passport);
-	console.log(" --- Passport --- ");*/
-	
-	console.log("");
-	console.log("");
-	console.log("Steam Authorization Return");
-	console.log("");
-	console.log("");
-	
-	res.redirect('/');
-});
+app.get('/auth/steam',
+  passport.authenticate('steam'),
+  function(req, res) {
+  });
+
+app.get('/auth/steam/return',
+  passport.authenticate('steam', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/login');
+  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
