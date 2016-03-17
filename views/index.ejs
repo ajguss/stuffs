@@ -1,14 +1,14 @@
 <?
-include("../resources/util/functions");
+data = include("../resources/util/data", {base: '..'});
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-        <?
-        generateHead("title");
+        <?-
+        include(data.ejs.utilities + "/head", {data: data});
         ?>
 	</head>
-	<body style="background: #EEEEEE">
+	<body>
 		<h1 style="text-align:center">
 			<a href="/auth/steam">LOGIN</a>
 		</h1>

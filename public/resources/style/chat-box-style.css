@@ -1,0 +1,27 @@
+.chat-box-wrapper
+{
+    position: fixed;
+    height: 225px;
+    width: 200px;
+    left: 5px;
+    bottom: 0px;
+    background-color: #777777;
+}
+
+.chat-box-message-wrapper
+{
+    height: 85%;
+    background: #CCCCCC;
+    margin: 5px;
+    overflow-y: scroll;
+}
+
+.chat-box-input-wrapper
+{
+    text-align: center;
+}
+
+.chat-box-input
+{
+    width: 60%;
+}
