@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 GLOBAL.passport = require('passport');
 var session = require('express-session');
 var SteamStrategy = require('passport-steam').Strategy;
+var MongoClient = require('mongodb').MongoClient;
 var ejs = require('ejs');
 
 //Set dilimiter to a ? (use <? ?> instead of <% %>)
@@ -23,6 +24,8 @@ GLOBAL.localIp = '192.168.0.108';
 GLOBAL.user = {};
 
 GLOBAL.title = 'Skin Cities';
+
+GLOBAL.baseDatabaseURL = "mongodb://localhost:27017/skin_city";
 
 //passport authentication things
 passport.serializeUser(function(user, done) 
