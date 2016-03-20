@@ -9,7 +9,9 @@ GLOBAL.passport = require('passport');
 var session = require('express-session');
 var SteamStrategy = require('passport-steam').Strategy;
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 var ejs = require('ejs');
+var User = require('./resources/util/js/user');
 
 //Set dilimiter to a ? (use <? ?> instead of <% %>)
 ejs.delimiter = '?';
@@ -17,23 +19,37 @@ ejs.delimiter = '?';
 //Retrieve page handlers
 var routes = require('./routes/index');
 var login = require('./routes/login');
+var chat = require('./routes/chat');
 
 //Setup basic Global variables
-GLOBAL.localIp = '192.168.0.108';
+GLOBAL.localIp = '192.168.0.103';
 
-GLOBAL.user = {};
+GLOBAL.user = undefined;
 
 GLOBAL.title = 'Skin Cities';
 
-GLOBAL.baseDatabaseURL = "mongodb://localhost:27017/skin_city";
+MongoClient.connect("mongodb://localhost:27017/skin_city", function(err, db)
+{
+    if(err)
+    {
+        console.log("Unsuccessful Database Connection");
+        console.error(err);
+    }
+    else
+    {
+        console.log("Connected To Datbase");
+        GLOBAL.database = db;
+    }
+    
+});
 
 //passport authentication things
 passport.serializeUser(function(user, done) 
 {
-    GLOBAL.user = user;
-    console.log(user);
-    
-	done(null, user);
+    GLOBAL.user = new User(user, function()
+    {
+        done(null, user);
+    });
 });
 
 passport.deserializeUser(function(obj, done) 
@@ -49,10 +65,6 @@ passport.use(new SteamStrategy(
 },
 function(identifier, profile, done)
 {
-    console.log("I GOT HERE!!!!!!!!!");
-    console.log(identifier);
-    console.log(profile);
-    
     return done(null, profile);
 }
 ));
@@ -79,6 +91,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Add page handlers
 app.use('/', routes);
 app.use('/login', login);
+app.use('/chat', chat);
 
 //Passport steam login credentials
 app.get('/auth/steam', passport.authenticate('steam'), function(req, res) {});
