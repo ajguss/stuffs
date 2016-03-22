@@ -1,9 +1,14 @@
+<?
+data = include("../resources/util/ejs/data", {base: '..'});
+?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?= title ?></title>
+        <?-
+        include(data.ejs.utilities + "/head", {data: data, title: title});
+        ?>
 	</head>
-	<body style="background: #EEEEEE">
+	<body>
 		<h1 style="text-align:center">
 			<a href="/auth/steam">LOGIN</a>
 		</h1>

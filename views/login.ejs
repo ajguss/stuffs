@@ -1,11 +1,16 @@
+<?
+data = include("../resources/util/ejs/data", {base: '..'});
+?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?= title ?></title>
+        <?-
+        include(data.ejs.utilities + "/head", {data: data, title: title});
+        ?>
 	</head>
 	<body style="background: #EEEEEE">
-		<div style="width:100?;max-width:1000px;margin:0px auto;">
-            <img src="<?= user._json.avatarfull ?>">
+		<div style="width:100%;max-width:1000px;margin:0px auto;">
+            <img src="<?= user.avatar ?>">
 		</div>
 	</body>
 </html>
