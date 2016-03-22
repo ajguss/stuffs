@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
+var sanitizer = require('sanitizer');
 var ObjectId = require('mongodb').ObjectID;
 
 router.post('/retrieve',
 function(req, res, next)
 {
-    if(GLOBAL.database && GLOBAL.user)
+    var session = req.session;
+    if(GLOBAL.database && session.user)
     {
         data = req.body;
         if(data.room && data.since)
@@ -24,7 +26,7 @@ function(req, res, next)
                     if(err)
                     {
                         console.err(err);
-                        res.send({error: err});
+                        res.send({err: err});
                     }
                     if(doc)
                     {
@@ -33,8 +35,8 @@ function(req, res, next)
                         {
                             if(doc.messages[i].time > data.since)
                             {
-                                var you = doc.messages[i].fromSteamId == GLOBAL.user.steamId;
-                                console.log(GLOBAL.user);
+                                var you = doc.messages[i].fromSteamId == session.user.steamId;
+                                console.log(session.user);
                                 response.messages.push({from: doc.messages[i].from, message: doc.messages[i].message, you: you});
                             }
                         }
@@ -55,7 +57,7 @@ function(req, res, next)
     }
     else if(GLOBAL.database)
     {
-        res.send({err: "User not logged in"});
+        res.send({err: "Please Log In"});
     }
     else
     {
@@ -66,7 +68,8 @@ function(req, res, next)
 router.post('/send',
 function(req, res, next)
 {
-    if(GLOBAL.database && GLOBAL.user)
+    var session = req.session;
+    if(GLOBAL.database && session.user)
     {
         var currTime = new Date().getTime();
         GLOBAL.database.collection("chat_rooms").updateMany({}, {$pull: {messages: {time: {$lt: (currTime - 5000)}}}});
@@ -84,14 +87,14 @@ function(req, res, next)
                 else if(doc)
                 {
                     GLOBAL.database.collection("chat_rooms").update({_id: doc._id}, 
-                    { 
-                        $push: 
+                    {
+                        $push:
                         {
                             messages: 
                             {
-                                from: GLOBAL.user.displayName,
-                                fromSteamId: GLOBAL.user.steamId,
-                                message: data.message,
+                                from: session.user.displayName,
+                                fromSteamId: session.user.steamId,
+                                message: sanitizer.escape(data.message),
                                 time: currTime
                             }
                         }
@@ -122,6 +125,7 @@ function(req, res, next)
 router.post('/rooms',
 function(req, res, next)
 {
+    var session = req.session;
     if(GLOBAL.database)
     {
         GLOBAL.database.collection("chat_rooms").find(function(err, docs)

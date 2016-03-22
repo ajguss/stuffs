@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) 
 {
-	res.render('index', { title: 'Skin Gambling', whoToFuck: "DAVID"  });
+	res.render('index', { title: GLOBAL.title });
 });
 
 module.exports = router;

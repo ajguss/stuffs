@@ -169,9 +169,41 @@
     margin: 2px auto;
     background-color: #009999;
     padding: 2px;
+    border-radius: 5px;
+}
+
+.chat-box-single-message th, .chat-box-single-message-you th
+{
+    text-align: right;
+    border-bottom-style: dashed;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.6);
+}
+
+.chat-box-single-message-you th
+{
+    text-align: left;
+}
+
+.chat-box-single-message th a, .chat-box-single-message td a, .chat-box-single-message-you th a, .chat-box-single-message-you td a
+{
+    font-size: 0.8em;
 }
 
 .chat-box-single-message-you
 {
     background-color: #E2C600;
+}
+
+.chat-box-error-message
+{
+    width: 100%;
+    padding: 2px;
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.chat-box-error-message a
+{
+    font-weight: bold;
+    font-size: 1.2em;
 }

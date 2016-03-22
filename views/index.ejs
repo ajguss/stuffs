@@ -5,7 +5,7 @@ data = include("../resources/util/ejs/data", {base: '..'});
 <html>
 	<head>
         <?-
-        include(data.ejs.utilities + "/head", {data: data});
+        include(data.ejs.utilities + "/head", {data: data, title: title});
         ?>
 	</head>
 	<body>

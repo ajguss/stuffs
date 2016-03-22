@@ -76,7 +76,10 @@ function showChatPage()
                 {
                     $.post('/chat/send', {room: boxData.roomId, message: $(".chat-box-text-input").val()}, function(data)
                     {
-                        console.log(data);
+                        if(data.err)
+                        {
+                            showErrorPage(data.err);
+                        }
                         $('.chat-box-text-input').val("");
                     }, 'json');
                 }
@@ -110,6 +113,10 @@ function showChatPage()
 function showChatRoomListPage()
 {
     boxData.pageReturn = showChatRoomListPage;
+    boxData.roomId = undefined;
+    boxData.since = -1;
+    boxData.roomName = undefined;
+    
     setChatBoxTitle("Join Chat Room");
     
     if(!doesChatBoxHaveElement(".chat-room-list"))
@@ -117,19 +124,26 @@ function showChatRoomListPage()
         $('.chat-box-body').append('<div class="chat-room-list"></div>');
         $.post("/chat/rooms", {}, function(data)
         {
-            var roomList = $('.chat-box-body').find('.chat-room-list');
-            for(var i = 0; i < data.rooms.length; i++)
+            if(data.err)
             {
-                roomList.append('<div class="chat-box-select-button chat-box-room-select-button" data-room-id="' + data.rooms[i]._id + '" data-room-name="' + data.rooms[i].name + '"><a>' + data.rooms[i].name + '</a></div>');
+                showErrorPage(data.err);
             }
-            
-            $('.chat-box-room-select-button').click(function(e)
+            else
             {
-                boxData.roomId = $(e.currentTarget).data("room-id");
-                boxData.roomName = $(e.currentTarget).data("room-name");
-                $('.chat-box-message-list').html("");
-                showChatPage();
-            });
+                var roomList = $('.chat-box-body').find('.chat-room-list');
+                for(var i = 0; i < data.rooms.length; i++)
+                {
+                    roomList.append('<div class="chat-box-select-button chat-box-room-select-button" data-room-id="' + data.rooms[i]._id + '" data-room-name="' + data.rooms[i].name + '"><a>' + data.rooms[i].name + '</a></div>');
+                }
+                
+                $('.chat-box-room-select-button').click(function(e)
+                {
+                    boxData.roomId = $(e.currentTarget).data("room-id");
+                    boxData.roomName = $(e.currentTarget).data("room-name");
+                    $('.chat-box-message-list').html("");
+                    showChatPage();
+                });
+            }
             
         }, 'json');
     }
@@ -164,6 +178,32 @@ function showSettingsPage()
         });
     }
     showPage('.chat-box-menu');
+    showChatBox();
+}
+
+function showErrorPage(error)
+{
+    setChatBoxTitle("An Error Has Occured");
+    
+    boxData.pageReturn = undefined;
+    boxData.roomId = undefined;
+    boxData.since = -1;
+    boxData.roomName = undefined;
+    
+    if(!doesChatBoxHaveElement(".chat-box-error-page"))
+    {
+        $('.chat-box-body').append('<div class="chat-box-error-page"></div>');
+        var errorPage = $('.chat-box-body').find('.chat-box-error-page');
+        
+        errorPage.append('<div class="chat-box-error-message"></div>');
+        errorPage.append('<div class="chat-box-select-button" id="chat-box-error-okay-button"><a>Okay</a></div>');
+        
+        $("#chat-box-error-okay-button").click(showChatRoomListPage);
+    }
+    
+    $('.chat-box-error-message').html("<a>"  + error + "</a>");
+    
+    showPage('.chat-box-error-page');
     showChatBox();
 }
 
@@ -216,24 +256,32 @@ function getNewMessages()
         
         $.post("/chat/retrieve", {room: boxData.roomId, since: boxData.since}, function(data)
         {
-            if(data.since) boxData.since = data.since;
-            if(data.messages && data.messages.length > 0)
+            if(data.err)
             {
-                for(var i = 0; i < data.messages.length; i++)
+                showErrorPage(data.err);
+                console.log("got here");
+            }
+            else
+            {
+                if(data.since) boxData.since = data.since;
+                if(data.messages && data.messages.length > 0)
                 {
-                    console.log(data);
-                    $('.chat-box-message-list').append(
-                            '<table class="chat-box-single-message' + (data.messages[0].you ? '-you' : '') + '">' +
-                                '<tr>' +
-                                    '<th><a>' + data.messages[i].from + '</a></th>' +
-                                '</tr>' +
-                                '<tr>' +
-                                    '<td><a>' + data.messages[i].message + '</a></td>' +
-                                '</tr>' +
-                            '</table>');
-                    
-                    $('.chat-box-body').scrollTop($('.chat-box-message-list').height());
-                    
+                    for(var i = 0; i < data.messages.length; i++)
+                    {
+                        console.log(data);
+                        $('.chat-box-message-list').append(
+                                '<table class="chat-box-single-message' + (data.messages[i].you ? '-you' : '') + '">' +
+                                    '<tr>' +
+                                        '<th><a>' + data.messages[i].from + '</a></th>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                        '<td><a>' + data.messages[i].message + '</a></td>' +
+                                    '</tr>' +
+                                '</table>');
+                        
+                        $('.chat-box-body').scrollTop($('.chat-box-message-list').height());
+                        
+                    }
                 }
             }
         }, 'json');

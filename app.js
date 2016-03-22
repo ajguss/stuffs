@@ -22,10 +22,7 @@ var login = require('./routes/login');
 var chat = require('./routes/chat');
 
 //Setup basic Global variables
-GLOBAL.localIp = '192.168.0.103';
-
-GLOBAL.user = undefined;
-
+GLOBAL.localIp = '192.168.0.104';
 GLOBAL.title = 'Skin Cities';
 
 MongoClient.connect("mongodb://localhost:27017/skin_city", function(err, db)
@@ -46,10 +43,7 @@ MongoClient.connect("mongodb://localhost:27017/skin_city", function(err, db)
 //passport authentication things
 passport.serializeUser(function(user, done) 
 {
-    GLOBAL.user = new User(user, function()
-    {
-        done(null, user);
-    });
+    done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) 
@@ -69,6 +63,29 @@ function(identifier, profile, done)
 }
 ));
 
+//Force https redirect
+var https_redirect = function () 
+{
+    return function(req, res, next) 
+    {
+        if (req.secure) 
+        {
+            if(env === 'development') 
+            {
+                return res.redirect('https://localhost:3000' + req.url);
+            } 
+            else 
+            {
+                return res.redirect('https://' + req.headers.host + req.url);
+            }
+        }
+        else 
+        {
+            return next();
+        }
+    };
+};
+
 var app = express();
 
 // view engine setup
@@ -81,7 +98,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({secret: '1234567890QWERTY'}));
+app.use(session({secret: 'c8bf639a-0838-4266-918d-a5325d2775df'}));
 
 //Use passport authentication things
 app.use(passport.initialize());
@@ -89,6 +106,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Add page handlers
+app.use(https_redirect());
 app.use('/', routes);
 app.use('/login', login);
 app.use('/chat', chat);
@@ -97,8 +115,11 @@ app.use('/chat', chat);
 app.get('/auth/steam', passport.authenticate('steam'), function(req, res) {});
 app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: '/' }), 
     function(req, res) 
-    { 
-        res.redirect('/login'); 
+    {
+        req.session.user = new User(req.user, function()
+        {
+            res.redirect('/login'); 
+        });
     });
 
 // catch 404 and forward to error handler
