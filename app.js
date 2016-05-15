@@ -20,6 +20,7 @@ ejs.delimiter = '?';
 var routes = require('./routes/index');
 var login = require('./routes/login');
 var chat = require('./routes/chat');
+var something = require('./routes/something');
 
 //Setup basic Global variables
 GLOBAL.localIp = '192.168.0.104';
@@ -110,6 +111,7 @@ app.use(https_redirect());
 app.use('/', routes);
 app.use('/login', login);
 app.use('/chat', chat);
+app.use('/something', something);
 
 //Passport steam login credentials
 app.get('/auth/steam', passport.authenticate('steam'), function(req, res) {});
