@@ -23,9 +23,9 @@ var deposit = require('./routes/deposit');
 
 //Setup basic Global variables
 GLOBAL.localIp = 'localhost';//'192.168.0.104';
-GLOBAL.title = 'Skin Cities';
+GLOBAL.title = 'CSGOMeme';
 
-MongoClient.connect("mongodb://localhost:27017/skin_city", function(err, db)
+MongoClient.connect("mongodb://localhost:27017/csgomemedb", function(err, db)
 {
     if(err)
     {

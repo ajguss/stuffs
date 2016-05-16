@@ -1,4 +1,4 @@
-IF NOT EXIST C:\mongo\data\skincitydb md C:\mongo\data\skincitydb
-mongod --dbpath C:\mongo\data\skincitydb
+IF NOT EXIST C:\mongo\data\csgomemedb md C:\mongo\data\csgomemedb
+mongod --dbpath C:\mongo\data\csgomemedb
 
 pause

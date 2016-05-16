@@ -19,22 +19,19 @@ data = include("../resources/util/ejs/data", {base: '..'});
 				if(user)
 				{
 				?>
-				<div id="userInfo">
-					<ul>
-						<li>
-							<img src="<?= user.avatar ?>">
-						</li>
-						<li>
-							<h1 style="text-align:center"><?- user.displayName ?></h1>
-						</li>
-					</ul>
-				</div>
+				<a>
+					<img src="<?= user.avatar ?>">
+					<b style="text-align:center"><?- user.displayName ?></b>
+					<span class="caret"></span>
+				</a>
 				<?
 				}
 				else
 				{
 				?>
-				<a href="/auth/steam">LOGIN</a>
+				<a href="/auth/steam">
+					<img src="/resources/images/steam_login.png">
+				</a>
 				<? } ?>
 			</li>
 		</ul>
