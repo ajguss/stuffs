@@ -23,7 +23,7 @@ var chat = require('./routes/chat');
 var something = require('./routes/something');
 
 //Setup basic Global variables
-GLOBAL.localIp = '192.168.0.104';
+GLOBAL.localIp = 'localhost';//'192.168.0.104';
 GLOBAL.title = 'Skin Cities';
 
 MongoClient.connect("mongodb://localhost:27017/skin_city", function(err, db)
