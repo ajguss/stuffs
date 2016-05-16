@@ -18,9 +18,8 @@ ejs.delimiter = '?';
 
 //Retrieve page handlers
 var routes = require('./routes/index');
-var login = require('./routes/login');
 var chat = require('./routes/chat');
-var something = require('./routes/something');
+var deposit = require('./routes/deposit');
 
 //Setup basic Global variables
 GLOBAL.localIp = 'localhost';//'192.168.0.104';
@@ -109,9 +108,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Add page handlers
 app.use(https_redirect());
 app.use('/', routes);
-app.use('/login', login);
 app.use('/chat', chat);
-app.use('/something', something);
+app.use('/deposit', deposit);
 
 //Passport steam login credentials
 app.get('/auth/steam', passport.authenticate('steam'), function(req, res) {});
@@ -120,7 +118,7 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
     {
         req.session.user = new User(req.user, function()
         {
-            res.redirect('/login'); 
+            res.redirect('/'); 
         });
     });
 

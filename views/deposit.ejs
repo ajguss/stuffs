@@ -19,11 +19,16 @@ data = include("../resources/util/ejs/data", {base: '..'});
 				if(user)
 				{
 				?>
-				<a>
-					<img src="<?= user.avatar ?>">
-					<b style="text-align:center"><?- user.displayName ?></b>
-					<span class="caret"></span>
-				</a>
+				<div id="userInfo">
+					<ul>
+						<li>
+							<img src="<?= user.avatar ?>">
+						</li>
+						<li>
+							<h1 style="text-align:center"><?- user.displayName ?></h1>
+						</li>
+					</ul>
+				</div>
 				<?
 				}
 				else
@@ -33,5 +38,8 @@ data = include("../resources/util/ejs/data", {base: '..'});
 				<? } ?>
 			</li>
 		</ul>
+		<p>
+			Select which items you would like to deposit.
+		</p>
 	</body>
 </html>

@@ -3,7 +3,7 @@ function User(steamInfo, callback)
     //Retrieve information from Steam
     this.steamId = steamInfo._json.steamid;
     this.displayName = steamInfo.displayName;
-    this.avatar = steamInfo._json.avatarfull;
+    this.avatar = steamInfo._json.avatar;
     
     //Initialize anything extra
     
