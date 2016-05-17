@@ -38,10 +38,11 @@ data = include("../resources/util/ejs/data", {base: '..'});
 		<p>
 			Select which items you would like to deposit.
 		</p>
-		<button onClick="getInventory();">Refresh</button>
+		<button>Refresh</button>
 		<div id="table-content">
 			<table id="item-table">
 		<? 
+			console.log(user);
             if(user)
             {
                 if(user.inventory){
@@ -50,7 +51,7 @@ data = include("../resources/util/ejs/data", {base: '..'});
                         console.log(user.inventory);
                         ?>
                         <tr>
-                        <? for(item in user.inventory.rgDescriptions){
+                     <? for(item in user.inventory.rgDescriptions){
                             if(item.tradable == 1){
                                 //number of elements per row
                                 if(counter <= 6){ ?>
@@ -66,6 +67,7 @@ data = include("../resources/util/ejs/data", {base: '..'});
                                 }
                             }
                         }
+						?> </tr> <?
                     } 
                 }	
             }

@@ -125,14 +125,18 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
         });
     });
 	
-app.get('/inventory', function(req, res) {
-	if(req.session.user){
-		request("http://steamcommunity.com/profiles/" + req.session.user.steamId + "inventory/json/730/2", function(error, response, body){
-			if(!error && response.statusCode === 200){
+app.get('/inventory', function(req, res) 
+{
+	if(req.session.user)
+	{
+		request("http://steamcommunity.com/profiles/" + req.session.user.steamId + "inventory/json/730/2", function(error, response, body)
+		{
+			if(!error && response.statusCode === 200)
+			{
 				res.send(body);
 			}
-		}
-	)};	
+		});
+	}
 });
 
 // catch 404 and forward to error handler

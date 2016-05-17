@@ -6,13 +6,13 @@ function User(steamInfo, callback)
     this.steamId = steamInfo._json.steamid;
     this.displayName = steamInfo.displayName;
     this.avatar = steamInfo._json.avatar;
-    
+	this.inventory = NULL;
     //Initialize anything extra
     
     //Go to the database (if possible) and get user's information if it exists
     var _self = this;
     
-    //refreshInventory();
+    refreshInventory();
     
     if(GLOBAL.database)
     {
@@ -79,12 +79,12 @@ User.prototype.updateDatabase = function(callback)
 
 User.prototype.refreshInventory = function()
 {
-    var _self = this;
     request("http://steamcommunity.com/profiles/" + this.steamId + "inventory/json/730/2", function(error, response, body)
     {
+		console.log("something");
         if(!error && response.statusCode === 200)
         {
-            _self.inventory = body;
+            inventory = body;
         }
     });
 };
