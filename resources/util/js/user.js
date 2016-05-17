@@ -1,4 +1,4 @@
-var request = require("request");
+var request = require("sync-request");
 
 function User(steamInfo, callback)
 {
@@ -6,13 +6,13 @@ function User(steamInfo, callback)
     this.steamId = steamInfo._json.steamid;
     this.displayName = steamInfo.displayName;
     this.avatar = steamInfo._json.avatar;
-	this.inventory = NULL;
+	this.inventory;
+	
+	refreshInventory(this.steamId);
     //Initialize anything extra
-    
+	
     //Go to the database (if possible) and get user's information if it exists
     var _self = this;
-    
-    refreshInventory();
     
     if(GLOBAL.database)
     {
@@ -60,6 +60,14 @@ function User(steamInfo, callback)
     {
         callback();
     }
+	
+	function refreshInventory(steamId)
+	{
+		var res = request('GET', 'http://steamcommunity.com/profiles/' + steamId + '/inventory/json/730/2');
+		
+		this.inventory = JSON.parse(res.body.toString('utf-8'));
+	};
+
 }
 
 User.prototype.updateDatabase = function(callback)
@@ -77,16 +85,6 @@ User.prototype.updateDatabase = function(callback)
     }
 };
 
-User.prototype.refreshInventory = function()
-{
-    request("http://steamcommunity.com/profiles/" + this.steamId + "inventory/json/730/2", function(error, response, body)
-    {
-		console.log("something");
-        if(!error && response.statusCode === 200)
-        {
-            inventory = body;
-        }
-    });
-};
+
 
 module.exports = User;

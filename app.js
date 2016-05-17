@@ -12,7 +12,6 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var ejs = require('ejs');
 var User = require('./resources/util/js/user');
-var request = require("request");
 
 //Set dilimiter to a ? (use <? ?> instead of <% %>)
 ejs.delimiter = '?';
@@ -124,20 +123,6 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
             res.redirect('/'); 
         });
     });
-	
-app.get('/inventory', function(req, res) 
-{
-	if(req.session.user)
-	{
-		request("http://steamcommunity.com/profiles/" + req.session.user.steamId + "inventory/json/730/2", function(error, response, body)
-		{
-			if(!error && response.statusCode === 200)
-			{
-				res.send(body);
-			}
-		});
-	}
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) 

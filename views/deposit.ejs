@@ -40,39 +40,38 @@ data = include("../resources/util/ejs/data", {base: '..'});
 		</p>
 		<button>Refresh</button>
 		<div id="table-content">
+			<h1><?= user.inventory ?></h1>
 			<table id="item-table">
 		<? 
-			console.log(user);
-            if(user)
-            {
-                if(user.inventory){
-                    if(user.inventory.success == 1){
-                        var counter = 0;
-                        console.log(user.inventory);
-                        ?>
-                        <tr>
-                     <? for(item in user.inventory.rgDescriptions){
-                            if(item.tradable == 1){
-                                //number of elements per row
-                                if(counter <= 6){ ?>
-                                    <td>
-                                        <img class='weapon-icon' src="http://cdn.steamcommunity.com/economy/image/"<?= item.icon_url ?>>
-                                        <b> <?= item.market_name ?></b>
-                                    </td>
-                                    <?counter ++;
-                                }
-                                else{ ?>
-                                    </tr><tr>
-                                    <? counter = 0;
-                                }
-                            }
-                        }
-						?> </tr> <?
-                    } 
-                }	
-            }
-            else
-            {
+				if(user)
+				{
+					if(user.inventory){
+						if(user.inventory.success == 1){
+							var counter = 0;
+							?>
+							<tr>
+						<? for(item in user.inventory.rgDescriptions){
+								if(item.tradable == 1){
+									//number of elements per row
+									if(counter <= 6){ ?>
+										<td>
+											<img class='weapon-icon' src="http://cdn.steamcommunity.com/economy/image/"<?= item.icon_url ?>>
+											<b> <?= item.market_name ?></b>
+										</td>
+										<?counter ++;
+									}
+									else{ ?>
+										</tr><tr>
+										<? counter = 0;
+									}
+								}
+							}
+							?> </tr> <?
+						} 
+					}	
+				}
+				else
+				{
             ?>
             <h1>NO USER</h1>
             <?
