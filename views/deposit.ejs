@@ -14,6 +14,7 @@ data = include("../resources/util/ejs/data", {base: '..'});
 					console.log(data);
 					var inventory = data;
 				});
+				
 			}
 		</script>
 	</head>
@@ -50,7 +51,7 @@ data = include("../resources/util/ejs/data", {base: '..'});
 		<button onClick="getInventory();">Refresh</button>
 		<div id="table-content">
 			<table id="item-table">
-		<? 	var inventory;
+		<? 
 			if(inventory){
 				if(inventory.success == 1){
 					var counter = 0;
