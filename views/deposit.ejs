@@ -7,6 +7,15 @@ data = include("../resources/util/ejs/data", {base: '..'});
         <?-
         include(data.ejs.utilities + "/head", {data: data, title: title});
         ?>
+		<script>
+			function getInventory() {
+				// Grab the data from app ajax call
+				$.get('/inventory', function (data) {
+					console.log(data);
+					var inventory = data;
+				});
+			}
+		</script>
 	</head>
 	<body>
 		<ul id="navbar">
@@ -38,5 +47,36 @@ data = include("../resources/util/ejs/data", {base: '..'});
 		<p>
 			Select which items you would like to deposit.
 		</p>
+		<button onClick="getInventory();">Refresh</button>
+		<div id="table-content">
+			<table id="item-table">
+		<? 	var inventory;
+			if(inventory){
+				if(inventory.success == 1){
+					var counter = 0;
+					console.log(inventory);
+					?>
+					<tr>
+					<? for(item in inventory.rgDescriptions){
+						if(item.tradable == 1){
+							//number of elements per row
+							if(counter <= 6){ ?>
+								<td>
+									<img class='weapon-icon' src="http://cdn.steamcommunity.com/economy/image/"<?= item.icon_url ?>>
+									<b> <?= item.market_name ?></b>
+								</td>
+								<?counter ++;
+							}
+							else{ ?>
+								</tr><tr>
+								<? counter = 0;
+							}
+						}
+					}
+				} 
+			}	?> 
+			</table>
+		</div>
+		
 	</body>
 </html>

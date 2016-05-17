@@ -12,6 +12,7 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var ejs = require('ejs');
 var User = require('./resources/util/js/user');
+var request = require("request");
 
 //Set dilimiter to a ? (use <? ?> instead of <% %>)
 ejs.delimiter = '?';
@@ -146,6 +147,16 @@ if (app.get('env') === 'development')
     });
 }
 
+
+//app.get('/inventory', function(req, res) {
+//	if(req.session.user){
+//		request("http://steamcommunity.com/profiles/" + req.session.user.steamId + "inventory/json/730/2", function(error, response, body){
+//			if(!error && response.statusCode === 200){
+//				res.send(body);
+//			}
+//		}
+//	}
+//});
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) 
