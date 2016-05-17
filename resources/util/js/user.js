@@ -1,3 +1,5 @@
+var request = require("request");
+
 function User(steamInfo, callback)
 {
     //Retrieve information from Steam
@@ -8,7 +10,9 @@ function User(steamInfo, callback)
     //Initialize anything extra
     
     //Go to the database (if possible) and get user's information if it exists
-    _self = this;
+    var _self = this;
+    
+    //refreshInventory();
     
     if(GLOBAL.database)
     {
@@ -71,6 +75,18 @@ User.prototype.updateDatabase = function(callback)
     {
         callback();
     }
+};
+
+User.prototype.refreshInventory = function()
+{
+    var _self = this;
+    request("http://steamcommunity.com/profiles/" + this.steamId + "inventory/json/730/2", function(error, response, body)
+    {
+        if(!error && response.statusCode === 200)
+        {
+            _self.inventory = body;
+        }
+    });
 };
 
 module.exports = User;

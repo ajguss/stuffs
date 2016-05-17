@@ -117,8 +117,10 @@ app.get('/auth/steam', passport.authenticate('steam'), function(req, res) {});
 app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: '/' }), 
     function(req, res) 
     {
+        console.log("Steam return");
         req.session.user = new User(req.user, function()
         {
+            console.log("User Created");
             res.redirect('/'); 
         });
     });

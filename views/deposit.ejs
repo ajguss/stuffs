@@ -7,16 +7,6 @@ data = include("../resources/util/ejs/data", {base: '..'});
         <?-
         include(data.ejs.utilities + "/head", {data: data, title: title});
         ?>
-		<script>
-			function getInventory() {
-				// Grab the data from app ajax call
-				$.get('/inventory', function (data) {
-					console.log(data);
-					var inventory = data;
-				});
-				
-			}
-		</script>
 	</head>
 	<body>
 		<ul id="navbar">
@@ -52,30 +42,40 @@ data = include("../resources/util/ejs/data", {base: '..'});
 		<div id="table-content">
 			<table id="item-table">
 		<? 
-			if(inventory){
-				if(inventory.success == 1){
-					var counter = 0;
-					console.log(inventory);
-					?>
-					<tr>
-					<? for(item in inventory.rgDescriptions){
-						if(item.tradable == 1){
-							//number of elements per row
-							if(counter <= 6){ ?>
-								<td>
-									<img class='weapon-icon' src="http://cdn.steamcommunity.com/economy/image/"<?= item.icon_url ?>>
-									<b> <?= item.market_name ?></b>
-								</td>
-								<?counter ++;
-							}
-							else{ ?>
-								</tr><tr>
-								<? counter = 0;
-							}
-						}
-					}
-				} 
-			}	?> 
+            if(user)
+            {
+                if(user.inventory){
+                    if(user.inventory.success == 1){
+                        var counter = 0;
+                        console.log(user.inventory);
+                        ?>
+                        <tr>
+                        <? for(item in user.inventory.rgDescriptions){
+                            if(item.tradable == 1){
+                                //number of elements per row
+                                if(counter <= 6){ ?>
+                                    <td>
+                                        <img class='weapon-icon' src="http://cdn.steamcommunity.com/economy/image/"<?= item.icon_url ?>>
+                                        <b> <?= item.market_name ?></b>
+                                    </td>
+                                    <?counter ++;
+                                }
+                                else{ ?>
+                                    </tr><tr>
+                                    <? counter = 0;
+                                }
+                            }
+                        }
+                    } 
+                }	
+            }
+            else
+            {
+            ?>
+            <h1>NO USER</h1>
+            <?
+            }
+            ?> 
 			</table>
 		</div>
 		
