@@ -4,6 +4,7 @@ function User(steamInfo, callback)
     this.steamId = steamInfo._json.steamid;
     this.displayName = steamInfo.displayName;
     this.avatar = steamInfo._json.avatarmedium;
+	this.inv = "http://steamcommunity.com/profiles/" +  this.steamId+ "/inventory/json/730/2";
     
     //Initialize anything extra
     

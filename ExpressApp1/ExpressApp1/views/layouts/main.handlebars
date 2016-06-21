@@ -38,17 +38,21 @@
 			</li>
 		</ul>
  {{{body}}}
+	
 	<thead> 
-        <th>Inventory</th> 
+        <th>pic</th> 
+		<th>name</th> 
     </thead>
+	{{#each item}}
 	<tbody> 
         
         <tr> 
-            <td>name</td> 
-            <td>price</td> 
+            <th><img src={{url}} height = 100 width = 100></th>
+			<td>{{name}}</td>
         </tr> 
         
     </tbody> 
-</table> 		
+</table> 	
+{{/each}}	
 </body>
 </html>
