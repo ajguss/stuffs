@@ -37,22 +37,27 @@
 				
 			</li>
 		</ul>
+		
  {{{body}}}
-	
-	<thead> 
-        <th>pic</th> 
-		<th>name</th> 
+<table>
+		<thead> 
+        
     </thead>
-	{{#each item}}
 	<tbody> 
         
         <tr> 
-            <th><img src={{url}} height = 100 width = 100></th>
-			<td>{{name}}</td>
-        </tr> 
+{{#each url}}
+	
+            <td><img src={{this}} height = 50 width = 50></td>
+        
+	{{#next @index}}
+		</tr>
+		<tr>
+		{{/next}}
+{{/each}}
+</tr> 
         
     </tbody> 
-</table> 	
-{{/each}}	
+</table> 
 </body>
 </html>

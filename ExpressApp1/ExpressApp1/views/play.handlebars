@@ -1,1 +1,16 @@
 <h1>Welcome to CSGOme.me</h1>
+<thead> 
+        <th>pic</th> 
+		<th>name</th> 
+    </thead>
+	{{#each rgDescription}}
+	<tbody> 
+        
+        <tr> 
+            <th><img src={{icon_url}} height = 100 width = 100></th>
+			<td>{{market_name}}</td>
+        </tr> 
+        
+    </tbody> 
+</table> 	
+{{/each}}
