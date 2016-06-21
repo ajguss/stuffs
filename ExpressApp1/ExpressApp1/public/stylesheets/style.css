@@ -19,6 +19,17 @@ table, th, td {
 th, td {
     padding: 15px;
 }
+figure {
+    display: block;
+    margin-top: .1em;
+    margin-bottom: .1em;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+figure figcaption {
+    border: 1px solid red;
+    text-align: center;
+}
 
 #navbar{
 	font-size: 24px;

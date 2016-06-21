@@ -48,7 +48,12 @@
         <tr> 
 {{#each url}}
 	
-            <td><img src={{this}} height = 50 width = 50></td>
+            <td>
+			<figure>
+				<img src={{this}} height = 75 width = 75 />
+				<figcaption>Price</figcaption>
+				</figure>
+			</td>
         
 	{{#next @index}}
 		</tr>
