@@ -16,12 +16,12 @@
 			<li style="float: right;">
 				
 				
-				{{#if user}}
+				{{#if avatar}}
 				
 				
 				<a>
-					<img src=user.avatar>
-					<b style="text-align:center"><?- user.displayName ?></b>
+					<img src={{avatar}}>
+					<b style="text-align:center">{{name}}</b>
 					<span class="caret"></span>
 				</a>
 				
@@ -38,6 +38,17 @@
 			</li>
 		</ul>
  {{{body}}}
-			
+	<thead> 
+        <th>Inventory</th> 
+    </thead>
+	<tbody> 
+        
+        <tr> 
+            <td>name</td> 
+            <td>price</td> 
+        </tr> 
+        
+    </tbody> 
+</table> 		
 </body>
 </html>

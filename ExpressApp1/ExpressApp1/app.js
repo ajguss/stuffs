@@ -56,6 +56,15 @@ function(identifier, profile, done)
 var signed = false;
 var avatar = null;
 var sname = null;
+var inv = {
+	items: [ {
+		name: "knife",
+		price: "$200.95"
+	}, {
+		name: "ak",
+		price: "$25.27"
+	} ]
+	};
 
 var app = express();
 app.engine('handlebars', handlebars.engine);
@@ -72,7 +81,16 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
 	
-	res.render('home');
+	res.render('home', {items: inv});
+	
+	
+});
+app.get('/play', function (req, res) {
+	
+	res.render('play' , {
+		avatar: app.locals.avatar,
+		name: app.locals.steamName,
+	});
 	
 	
 });
@@ -88,8 +106,8 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
 			
 			app.locals.avatar = req.session.user.avatar;
 			app.locals.steamName = req.session.user.displayName;
-			res.render('home');
-            res.redirect('/'); 
+			//res.render('home');
+            res.redirect('/play'); 
         });
 		
 		
